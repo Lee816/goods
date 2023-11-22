@@ -22,7 +22,7 @@ class User(AbstractUser):
     user_image = models.ImageField(default="user.png", upload_to=user_image_path)
 
     followings = models.ManyToManyField(
-        "self", symmetrical=False, related_name="followers", blank=True, null=True
+        "self", symmetrical=False, related_name="followers", blank=True
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
