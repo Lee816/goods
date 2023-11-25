@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    회원가입
+    <form action="{% url "account:register" %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="username" id="username" placeholder='Username'>
+        <input type="text" name="nickname" id="nickname" placeholder='Nickname'>
+        <input type="email" name="email" id="email" placeholder='Email'>
+        <input type="text" name="phone" id="phone" placeholder='Phone'>
+        <input type="password" name="password" id="password" placeholder='Password'>
+        <input type="submit" value="Register">
+    </form>
+{% endblock content %}
