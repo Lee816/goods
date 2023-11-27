@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
+from .permissions import User_Update_Permission
 
 
 class RegisterView(View):
@@ -50,3 +50,23 @@ class LogoutView(LoginRequiredMixin, View):
     def post(self, request):
         logout(request)
         return redirect("account:login")
+
+
+class UpdateView(User_Update_Permission, View):
+    def get(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+
+        if user == request.user:
+            return render(request, "account/update.html")
+
+    def post(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+
+        user.nickname = request.POST["nickname"]
+        user.phone = request.POST["phone"]
+        user.introduce = request.POST["introduce"]
+        user.user_image = request.FILES["user_image"]
+
+        user.save()
+
+        return redirect("home")
