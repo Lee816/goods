@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
 
@@ -22,7 +23,7 @@ class RegisterView(View):
         new_user.set_password(request.POST["password"])
         new_user.save()
 
-        return HttpResponse("가입완료")
+        return redirect("home")
 
 
 class LoginView(View):
@@ -37,6 +38,15 @@ class LoginView(View):
 
         if user is not None:
             login(request, user)
-            return redirect("account:login")
+            return redirect("home")
 
         return render(request, "base/bad_request.html")
+
+
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, "base/bad_request.html")
+
+    def post(self, request):
+        logout(request)
+        return redirect("account:login")
