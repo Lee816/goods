@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 def user_image_path(instance, filename):
-    return f"account/{datetime.today().year}년{datetime.today().month}월/{datetime.today().day}/{instance.username}/{filename}"
+    return f"account/{datetime.today().year}.{datetime.today().month}/{datetime.today().day}/{instance.username}/{filename}"
 
 
 class User(AbstractUser):
@@ -19,7 +19,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15, unique=True)
     introduce = models.TextField(blank=True)
-    user_image = models.ImageField(default="user.png", upload_to=user_image_path)
+    user_image = models.ImageField(default="user.jpg", upload_to=user_image_path)
 
     followings = models.ManyToManyField(
         "self", symmetrical=False, related_name="followers", blank=True
