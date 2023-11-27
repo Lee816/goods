@@ -35,3 +35,21 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    @property
+    def following_count(self):
+        following_count = 0
+        if self.followings.all():
+            for _ in self.followings.all():
+                following_count += 1
+
+        return following_count
+
+    @property
+    def followers_count(self):
+        followers_count = 0
+        if self.followers.all():
+            for _ in self.followers.all():
+                followers_count += 1
+
+        return followers_count
