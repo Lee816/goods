@@ -23,7 +23,7 @@ class RegisterView(View):
         new_user.set_password(request.POST["password"])
         new_user.save()
 
-        return redirect("home")
+        return redirect("login")
 
 
 class LoginView(View):
