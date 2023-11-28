@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    {% for goods in goods_list %}
+        <hr>
+        [{{ goods.entertainer}}] - {{ goods.category }} <br>
+        creator : {{ goods.creator }} <br>
+        description : {{ goods.description }} <br>
+        like : {{ goods.like_count }} <br>
+    {% endfor %}
+{% endblock content %}
