@@ -5,9 +5,9 @@ from django.views import View
 from .models import Goods, Category, Entertainer, Design
 
 
-class GoodsListView(LoginRequiredMixin, View):
+class GoodsListView(View):
     def get(self, request):
-        goods_list = Goods.objects.all()
+        goods_list = Goods.objects.all().order_by("-updated_at")
         return render(request, "goods/goods_list.html", {"goods_list": goods_list})
 
     def post(self, request):
