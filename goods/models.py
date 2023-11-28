@@ -34,15 +34,22 @@ class Goods(models.Model):
         User, on_delete=models.CASCADE, related_name="create_goods"
     )
     description = models.TextField(blank=True)
-    likes = models.ManyToManyField(
-        User, related_name="like_goods", blank=True, null=True
-    )
+    likes = models.ManyToManyField(User, related_name="like_goods", blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"[{self.entertainer}] {self.creator} 굿즈"
+
+    @property
+    def like_count(self):
+        like_count = 0
+        if self.likes.all():
+            for _ in self.likes.all():
+                like_count += 1
+
+        return like_count
 
 
 def goods_design_path(instance, filename):
