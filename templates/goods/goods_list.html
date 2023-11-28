@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    {% for goods in goods_list %}
+        <hr>
+        [{{ goods.entertainer}}] - {{ goods.category }} <br>
+        creator : {{ goods.creator }} <br>
+        description : {{ goods.description }} <br>
+        like : {{ goods.like_count }} <br>
+        design : <br>
+        {% for design in goods.design.all %}
+            <img src="/media/{{ design.design }}" alt="">
+        {% endfor %}
+    {% endfor %}
+    <a href="{% url "goods:goods_create" %}">Add</a>
+{% endblock content %}

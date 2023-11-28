@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    <form action="{% url "goods:goods_create" %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <select name="category" >
+            {% for category in category %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="entertainer" >
+            {% for entertainer in entertainer %}
+                <option value="{{ entertainer.id }}">{{ entertainer.name }}</option>
+            {% endfor %}
+        </select>
+        desctiption : 
+        <textarea name="description" cols="30" rows="10"></textarea>
+        <input type="file" name="design" multiple>
+        <input type="submit" value="Create">
+    </form>
+{% endblock content %}
