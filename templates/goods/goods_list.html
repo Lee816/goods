@@ -7,5 +7,10 @@
         creator : {{ goods.creator }} <br>
         description : {{ goods.description }} <br>
         like : {{ goods.like_count }} <br>
+        design : <br>
+        {% for design in goods.design.all %}
+            <img src="/media/{{ design.design }}" alt="">
+        {% endfor %}
     {% endfor %}
+    <a href="{% url "goods:goods_create" %}">Add</a>
 {% endblock content %}
