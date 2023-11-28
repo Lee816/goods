@@ -1,0 +1,10 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    <form action="{% url "account:pw_confirm" user.id %}" method="post">
+        {% csrf_token %}
+        password : <input type="password" name="new_password1">
+        repeat password : <input type="password" name="new_password2">
+        <input type="submit" value="Reset">
+    </form>
+{% endblock content %}
