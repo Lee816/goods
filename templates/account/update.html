@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    <form action="{% url "account:update" user.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        nickname : <input type="text" name='nickname' value={{ user.nickname }}> <br>
+        phone : <input type="text" name='phone' value={{ user.phone }}> <br>
+        introduce : <input type="text" name='introduce' value={{ user.introduce }}> <br>
+        <img src="/media/{{ user.user_image }}" alt="">
+        <input type="file" name="user_image">
+        <input type="submit" value="Update">
+    </form>
+{% endblock content %}

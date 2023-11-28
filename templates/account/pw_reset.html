@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    <form action="{% url "account:pw_reset" user.id %}" method="post">
+        {% csrf_token %}
+        username : <input type="text" name="username" placeholder="username">
+        email : <input type="text" name='email' placeholder="email">
+        phone : <input type="text" name="phone" placeholder="phone">
+        <input type="submit" value="Send">
+    </form>
+{% endblock content %}
