@@ -8,7 +8,9 @@
         email : {{ user.email }} <br>
         introduce : {{ user.introduce }} <br>
         following : {{ user.following_count }} <br>
-        follower : {{ user.followers_count }}
+        follower : {{ user.followers_count }} <br>
+        img : 
+        <img src="media/{{ user.user_image }}" alt="">
         <form action="{% url "account:logout" %}" method="post">
             {% csrf_token %}
             <input type="submit" value="Logout">
