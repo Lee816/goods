@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from django.http.response import JsonResponse
+
+from account.models import User
 
 from .models import Goods, Category, Entertainer, Design
 
@@ -76,3 +79,17 @@ class GoodsDeleteView(LoginRequiredMixin, View):
         goods.delete()
 
         return redirect("goods:goods_list")
+
+
+class GoodsLikeView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        goods = get_object_or_404(Goods, id=pk)
+
+        if Goods.objects.filter(id=pk, likes=request.user).exists():
+            goods.likes.remove(request.user)
+            goods.save()
+            return JsonResponse({"message": "like", "count": goods.like_count})
+        else:
+            goods.likes.add(request.user)
+            goods.save()
+            return JsonResponse({"message": "unlike", "count": goods.like_count})

@@ -51,6 +51,14 @@ class Goods(models.Model):
 
         return like_count
 
+    @property
+    def like_list(self):
+        like_list = []
+        for user in self.likes.all():
+            like_list.append(user.nickname)
+
+        return like_list
+
 
 def goods_design_path(instance, filename):
     return f"goods/{instance.goods.entertainer}/{instance.goods.category}/{instance.goods.creator.username}/{filename}"
