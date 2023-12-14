@@ -7,7 +7,7 @@
         [{{ goods.entertainer}}] - {{ goods.category }} <br>
         creator : {{ goods.creator }} <br>
         description : {{ goods.description }} <br>
-        <button onclick="sendRequest({{ goods.id }}, this)">{% if user.nickname in goods.like_list %}Unlike{% else %}Like{% endif %}</button>: <span id="like_count">{{ goods.like_count }}</span> <br>
+        <button onclick="sendRequest({{ goods.id }}, this)">{% if user.nickname in goods.like_list %}Unlike{% else %}Like{% endif %}</button>: <span id="{{goods.id}}_like_count">{{ goods.like_count }}</span> <br>
         design : <br>
         {% for design in goods.design.all %}
             <img src="/media/{{ design.design }}" alt="">
@@ -22,11 +22,10 @@
     <script>
         function sendRequest(bid, event) {
             var httpRequest = new XMLHttpRequest();
-            var like_count = document.getElementById("like_count");
+            var like_count = document.getElementById(bid+"_like_count");
+
             httpRequest.onreadystatechange = function() {
                 if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
-                    console.log(httpRequest.responseText);
-
                     var json_data = JSON.parse(httpRequest.responseText);
                     if (json_data["message"]=="unlike") {
                         event.innerText = "Unlike";
