@@ -12,6 +12,10 @@
         {% for design in goods.design.all %}
             <img src="/media/{{ design.design }}" alt="">
         {% endfor %}
+        <form action="{% url "goods:goods_delete" goods.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
     {% endfor %}
     <a href="{% url "goods:goods_create" %}">Add</a>
 {% endblock content %}

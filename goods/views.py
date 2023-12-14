@@ -68,3 +68,11 @@ class GoodsUpdateView(LoginRequiredMixin, View):
         goods.save()
 
         return redirect("goods:goods_list")
+
+
+class GoodsDeleteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        goods = get_object_or_404(Goods, id=pk)
+        goods.delete()
+
+        return redirect("goods:goods_list")
