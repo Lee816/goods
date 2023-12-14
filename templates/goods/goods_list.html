@@ -3,6 +3,7 @@
 {% block content %}
     {% for goods in goods_list %}
         <hr>
+        <a href="{% url "goods:goods_update" goods.id %}">{{ goods }}</a> <br>
         [{{ goods.entertainer}}] - {{ goods.category }} <br>
         creator : {{ goods.creator }} <br>
         description : {{ goods.description }} <br>

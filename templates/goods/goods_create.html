@@ -1,21 +1,23 @@
 {% extends "base/base.html" %}
 
 {% block content %}
-    <form action="{% url "goods:goods_create" %}" method="post" enctype="multipart/form-data">
+    <form action="{% if goods %}{% url "goods:goods_update" goods.id %}{% else %}{% url "goods:goods_create" %}{% endif %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <select name="category" >
+        <select name="category">
             {% for category in category %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
+                <option value="{{ category.id }}" {% if goods.category == category %}selected{% endif %}>{{ category.name }}</option>
             {% endfor %}
         </select>
         <select name="entertainer" >
             {% for entertainer in entertainer %}
-                <option value="{{ entertainer.id }}">{{ entertainer.name }}</option>
+                <option value="{{ entertainer.id }}" {% if goods.entertainer == entertainer %}selected{% endif %}>{{ entertainer.name }}</option>
             {% endfor %}
         </select>
         desctiption : 
-        <textarea name="description" cols="30" rows="10"></textarea>
-        <input type="file" name="design" multiple>
-        <input type="submit" value="Create">
+        <textarea name="description" cols="30" rows="10">{% if goods.description %}{{ goods.description }}{% endif %}</textarea>
+        {% if not goods %}
+            <input type="file" name="design" multiple>
+        {% endif %}
+        <input type="submit" {% if goods %}value="Update"{% else %}value="Create"{% endif %}>
     </form>
 {% endblock content %}

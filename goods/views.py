@@ -43,3 +43,28 @@ class GoodsCreateView(LoginRequiredMixin, View):
             new_design.save()
 
         return redirect("goods:goods_list")
+
+
+class GoodsUpdateView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        category = Category.objects.all().order_by("name")
+        entertainer = Entertainer.objects.all().order_by("name")
+        goods = get_object_or_404(Goods, id=pk)
+        return render(
+            request,
+            "goods/goods_create.html",
+            {"category": category, "entertainer": entertainer, "goods": goods},
+        )
+
+    def post(self, request, pk):
+        category = get_object_or_404(Category, id=request.POST["category"])
+        entertainer = get_object_or_404(Entertainer, id=request.POST["entertainer"])
+        description = request.POST["description"]
+
+        goods = get_object_or_404(Goods, id=pk)
+        goods.category = category
+        goods.entertainer = entertainer
+        goods.description = description
+        goods.save()
+
+        return redirect("goods:goods_list")
