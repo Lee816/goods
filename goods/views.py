@@ -19,8 +19,8 @@ class GoodsListView(View):
 
 class GoodsCreateView(LoginRequiredMixin, View):
     def get(self, request):
-        category = Category.objects.all().order_by("name")
-        entertainer = Entertainer.objects.all().order_by("name")
+        category = Category.objects.all()
+        entertainer = Entertainer.objects.all()
         return render(
             request,
             "goods/goods_create.html",
@@ -50,8 +50,8 @@ class GoodsCreateView(LoginRequiredMixin, View):
 
 class GoodsUpdateView(LoginRequiredMixin, View):
     def get(self, request, pk):
-        category = Category.objects.all().order_by("name")
-        entertainer = Entertainer.objects.all().order_by("name")
+        category = Category.objects.all()
+        entertainer = Entertainer.objects.all()
         goods = get_object_or_404(Goods, id=pk)
         return render(
             request,
