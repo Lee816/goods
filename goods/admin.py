@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Entertainer, Goods, Design
+from .models import Category, Entertainer, Goods, Design, Comment, Recomment
 
 
 @admin.register(Category)
@@ -23,7 +23,12 @@ class DesignAdmin(admin.TabularInline):
     model = Design
 
 
+class RecommentAdmin(admin.TabularInline):
+    model = Recomment
+
+
 admin.site.register(Design)
+admin.site.register(Recomment)
 
 
 @admin.register(Goods)
@@ -34,4 +39,15 @@ class GoodsAdmin(admin.ModelAdmin):
     ordering = ["-created_at"]
     inlines = [
         DesignAdmin,
+    ]
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ["goods", "creator", "created_at"]
+    list_filter = ["created_at", "goods", "creator"]
+    search_fields = ["goods", "content", "creator"]
+    ordering = ["-created_at"]
+    inlines = [
+        RecommentAdmin,
     ]

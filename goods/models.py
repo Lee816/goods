@@ -113,3 +113,45 @@ class Design(models.Model):
             models.Index(fields=["goods"]),
             models.Index(fields=["created_at"]),
         ]
+
+
+class Comment(models.Model):
+    goods = models.ForeignKey(Goods, on_delete=models.CASCADE, related_name="comment")
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comment")
+    content = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.goods} - {self.creator} 댓글"
+
+    class Meta:
+        ordering = ["created_at"]
+        indexes = [
+            models.Index(fields=["goods"]),
+            models.Index(fields=["creator"]),
+            models.Index(fields=["created_at"]),
+        ]
+
+
+class Recomment(models.Model):
+    comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, related_name="recomment"
+    )
+    creator = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="recomment"
+    )
+    content = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.comment} - {self.creator} 대댓글"
+
+    class Meta:
+        ordering = ["created_at"]
+        indexes = [
+            models.Index(fields=["comment"]),
+            models.Index(fields=["creator"]),
+            models.Index(fields=["created_at"]),
+        ]
