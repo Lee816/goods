@@ -5,7 +5,7 @@ from django.http.response import JsonResponse
 
 from account.models import User
 
-from .models import Goods, Category, Entertainer, Design
+from .models import Goods, Category, Entertainer, Design, Comment, Recomment
 
 
 class GoodsListView(View):
@@ -93,3 +93,27 @@ class GoodsLikeView(LoginRequiredMixin, View):
             goods.likes.add(request.user)
             goods.save()
             return JsonResponse({"message": "unlike", "count": goods.like_count})
+
+
+class CommentCreateView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        goods = get_object_or_404(Goods, id=pk)
+
+        comment = Comment.objects.create(
+            goods=goods, creator=request.user, content=request.POST["content"]
+        )
+        comment.save()
+
+        return redirect("goods:goods_list")
+
+
+class RecommentCreateView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        comment = get_object_or_404(Comment, id=pk)
+
+        recomment = Recomment.objects.create(
+            comment=comment, creator=request.user, content=request.POST["content"]
+        )
+        recomment.save()
+
+        return redirect("goods:goods_list")

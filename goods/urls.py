@@ -9,4 +9,14 @@ urlpatterns = [
     path("<int:pk>/update/", views.GoodsUpdateView.as_view(), name="goods_update"),
     path("<int:pk>/delete/", views.GoodsDeleteView.as_view(), name="goods_delete"),
     path("<int:pk>/like/", views.GoodsLikeView.as_view(), name="goods_like"),
+    path(
+        "<int:pk>/comment/create/",
+        views.CommentCreateView.as_view(),
+        name="comment_create",
+    ),
+    path(
+        "comment/<int:pk>/recomment/create/",
+        views.RecommentCreateView.as_view(),
+        name="recomment_create",
+    ),
 ]
