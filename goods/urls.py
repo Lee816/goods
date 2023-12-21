@@ -16,8 +16,13 @@ urlpatterns = [
         name="comment_create",
     ),
     path(
-        "comment/<int:pk>/recomment/create/",
-        views.RecommentCreateView.as_view(),
-        name="recomment_create",
+        "comment/<int:pk>/update/",
+        views.CommentUpdateView.as_view(),
+        name="comment_update",
+    ),
+    path(
+        "comment/recomment/<int:pk>/update/",
+        views.RecommentUpdateView.as_view(),
+        name="recomment_update",
     ),
 ]

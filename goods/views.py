@@ -113,6 +113,15 @@ class CommentCreateView(LoginRequiredMixin, View):
         return redirect("goods:goods_detail", goods.id)
 
 
+class CommentUpdateView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        comment = get_object_or_404(Comment, id=pk)
+        comment.content = request.POST["content"]
+        comment.save()
+
+        return redirect("goods:goods_detail", comment.goods.id)
+
+
 class RecommentCreateView(LoginRequiredMixin, View):
     def post(self, request, pk):
         comment = get_object_or_404(Comment, id=pk)
@@ -123,3 +132,13 @@ class RecommentCreateView(LoginRequiredMixin, View):
         recomment.save()
 
         return redirect("goods:goods_detail", comment.goods.id)
+
+
+class RecommentUpdateView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        recomment = get_object_or_404(Recomment, id=pk)
+
+        recomment.content = request.POST["content"]
+        recomment.save()
+
+        return redirect("goods:goods_detail", recomment.comment.goods.id)
