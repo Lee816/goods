@@ -15,9 +15,17 @@
             {% for comment in goods.comment.all %}
                 <p>
                     {{ comment.creator }} : {{ comment.content }}
+                    <form action="{% url "goods:comment_delete" comment.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete">
+                    </form>
                     {% if comment.recomment.all %}
                         {% for recomment in comment.recomment.all %}
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;{{ recomment.creator }} : {{ recomment.content }}
+                            <form action="{% url "goods:recomment_delete" recomment.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Delete">
+                            </form>
                         {% endfor %}
                     {% endif %}
                     <form action="{% url "goods:recomment_create" comment.id %}" method="post">
