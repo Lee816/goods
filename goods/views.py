@@ -17,6 +17,12 @@ class GoodsListView(View):
         return render(request, "base/bad_request.html")
 
 
+class GoodsDetailView(View):
+    def get(self, request, pk):
+        goods = get_object_or_404(Goods, id=pk)
+        return render(request, "goods/goods_detail.html", {"goods": goods})
+
+
 class GoodsCreateView(LoginRequiredMixin, View):
     def get(self, request):
         category = Category.objects.all()

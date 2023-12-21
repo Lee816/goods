@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+    <a href="">[{{ goods.entertainer}}] - {{ goods.category }}</a> <a href="{% url "goods:goods_update" goods.id %}">(수정)</a><br>
+        creator : {{ goods.creator }} <br>
+        description : {{ goods.description }} <br>
+        <button onclick="sendRequest({{ goods.id }}, this)">{% if user.nickname in goods.like_list %}Unlike{% else %}Like{% endif %}</button>: <span id="{{goods.id}}_like_count">{{ goods.like_count }}</span> <br>
+        design : <br>
+        {% for design in goods.design.all %}
+            <img src="/media/{{ design.design }}" alt="">
+        {% endfor %}
+        <br>
+        {% if goods.comment.all %}
+            comment : <br>
+            {% for comment in goods.comment.all %}
+                <p>
+                    {{ comment.creator }} : {{ comment.content }}
+                    {% if comment.recomment.all %}
+                        {% for recomment in comment.recomment.all %}
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;{{ recomment.creator }} : {{ recomment.content }}
+                        {% endfor %}
+                    {% endif %}
+                    <form action="{% url "goods:recomment_create" comment.id %}" method="post">
+                        {% csrf_token %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="content" >
+                        <input type="submit" value="Recomment">
+                    </form>
+                </p>
+            {% endfor %}
+        {% endif %}
+{% endblock content %}
