@@ -110,7 +110,7 @@ class CommentCreateView(LoginRequiredMixin, View):
         )
         comment.save()
 
-        return redirect("goods:goods_list")
+        return redirect("goods:goods_detail", goods.id)
 
 
 class RecommentCreateView(LoginRequiredMixin, View):
@@ -122,4 +122,4 @@ class RecommentCreateView(LoginRequiredMixin, View):
         )
         recomment.save()
 
-        return redirect("goods:goods_list")
+        return redirect("goods:goods_detail", comment.goods.id)
