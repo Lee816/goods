@@ -20,12 +20,7 @@ class Room(models.Model):
 
 class Message(models.Model):
     message = models.TextField()
-    sender = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="sender_message"
-    )
-    receiver = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="receiver_message"
-    )
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message")
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="message")
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,9 +30,8 @@ class Message(models.Model):
         indexes = [
             models.Index(fields=["-created_at"]),
             models.Index(fields=["sender"]),
-            models.Index(fields=["receiver"]),
             models.Index(fields=["room"]),
         ]
 
     def __str__(self):
-        return f"{self.sender} -> {self.receiver}"
+        return f"{self.sender}이 보낸 메세지"
