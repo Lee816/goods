@@ -15,6 +15,10 @@ class RoomView(View):
             | Q(user2=request.user, user1=opponent)
         )
         if len(room) == 1:
-            return render(request, "chat/room.html", {"room": room[0]})
+            messages = Message.objects.filter(room=room[0])
+
+            return render(
+                request, "chat/room.html", {"room": room[0], "messages": messages}
+            )
         else:
             raise ValueError("Room Error")
