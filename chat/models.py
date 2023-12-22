@@ -29,9 +29,9 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["created_at"]
         indexes = [
-            models.Index(fields=["-created_at"]),
+            models.Index(fields=["created_at"]),
             models.Index(fields=["sender"]),
             models.Index(fields=["room"]),
         ]
