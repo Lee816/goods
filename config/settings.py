@@ -136,3 +136,12 @@ AUTH_USER_MODEL = "account.User"
 
 # 웹소켓 설정 channels
 ASGI_APPLICATION = "config.asgi.application"
+# channels redis
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    }
+}
