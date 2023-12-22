@@ -17,6 +17,9 @@ class Room(models.Model):
             models.Index(fields=["user2"]),
         ]
 
+    def __str__(self):
+        return f"{self.user1} - {self.user2}의 채팅방"
+
 
 class Message(models.Model):
     message = models.TextField()
