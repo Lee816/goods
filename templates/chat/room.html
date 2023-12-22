@@ -1,10 +1,13 @@
 {% extends "base/base.html" %}
 
 {% block content %}
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+    <div id="chat-log" cols="100" rows="20">
+        {% for message in messages %}
+            <p {% if message.sender == user %}style="margin-left:50px;"{% endif %}>{{ message.message }}</p>
+        {% endfor %}
+    </div><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
-    {{ room }}
     {{ room.id|json_script:"room-id" }}
     {{ user.id|json_script:"user-id" }}
     <script>
@@ -21,7 +24,8 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+            chatbox = document.querySelector('#chat-log');
+            chatbox.innerHTML += data.user_id === userID ? '<p style="margin-left:50px;" >' + data.message + '</p>' : '<p>' + data.message + '</p>';
         };
 
         chatSocket.onclose = function(e) {
