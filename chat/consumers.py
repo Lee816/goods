@@ -1,5 +1,11 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
 import json
+
+from django.shortcuts import get_object_or_404
+
+from account.models import User
+from .models import Room, Message
 
 
 class ChatComsumer(AsyncWebsocketConsumer):
@@ -24,6 +30,11 @@ class ChatComsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
 
         message = text_data_json["message"]
+        user_id = text_data_json["user_id"]
+
+        await self.save_message_to_db(
+            room_id=self.room_id, user_id=user_id, message=message
+        )
 
         await self.channel_layer.group_send(
             self.room_group_name,
@@ -37,3 +48,10 @@ class ChatComsumer(AsyncWebsocketConsumer):
         message = event["message"]
 
         await self.send(text_data=json.dumps({"message": message}))
+
+    @database_sync_to_async
+    def save_message_to_db(self, room_id, user_id, message):
+        room = get_object_or_404(Room, id=room_id)
+        sender = get_object_or_404(User, id=user_id)
+
+        Message.objects.create(room=room, sender=sender, message=message)
