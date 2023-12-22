@@ -34,7 +34,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ["username", "phone"]
 
     def __str__(self):
-        return self.username
+        return self.nickname
 
     @property
     def following_count(self):
