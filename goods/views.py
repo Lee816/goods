@@ -5,10 +5,15 @@ from django.http.response import JsonResponse
 
 from account.models import User
 
+from .permissions import (
+    Goods_Creator_Permission,
+    Comment_Creator_Permission,
+    Recomment_Creator_Permission,
+)
 from .models import Goods, Category, Entertainer, Design, Comment, Recomment
 
 
-class GoodsListView(View):
+class GoodsListView(LoginRequiredMixin, View):
     def get(self, request):
         goods_list = Goods.objects.all().order_by("-updated_at")
         return render(request, "goods/goods_list.html", {"goods_list": goods_list})
@@ -17,7 +22,7 @@ class GoodsListView(View):
         return render(request, "base/bad_request.html")
 
 
-class GoodsDetailView(View):
+class GoodsDetailView(LoginRequiredMixin, View):
     def get(self, request, pk):
         goods = get_object_or_404(Goods, id=pk)
         return render(request, "goods/goods_detail.html", {"goods": goods})
@@ -54,7 +59,7 @@ class GoodsCreateView(LoginRequiredMixin, View):
         return redirect("goods:goods_list")
 
 
-class GoodsUpdateView(LoginRequiredMixin, View):
+class GoodsUpdateView(Goods_Creator_Permission, View):
     def get(self, request, pk):
         category = Category.objects.all()
         entertainer = Entertainer.objects.all()
@@ -79,7 +84,7 @@ class GoodsUpdateView(LoginRequiredMixin, View):
         return redirect("goods:goods_list")
 
 
-class GoodsDeleteView(LoginRequiredMixin, View):
+class GoodsDeleteView(Goods_Creator_Permission, View):
     def post(self, request, pk):
         goods = get_object_or_404(Goods, id=pk)
         goods.delete()
@@ -113,7 +118,7 @@ class CommentCreateView(LoginRequiredMixin, View):
         return redirect("goods:goods_detail", goods.id)
 
 
-class CommentUpdateView(LoginRequiredMixin, View):
+class CommentUpdateView(Comment_Creator_Permission, View):
     def post(self, request, pk):
         comment = get_object_or_404(Comment, id=pk)
         comment.content = request.POST["content"]
@@ -122,7 +127,7 @@ class CommentUpdateView(LoginRequiredMixin, View):
         return redirect("goods:goods_detail", comment.goods.id)
 
 
-class CommentDeleteView(LoginRequiredMixin, View):
+class CommentDeleteView(Comment_Creator_Permission, View):
     def post(self, request, pk):
         comment = get_object_or_404(Comment, id=pk)
         comment.delete()
@@ -142,7 +147,7 @@ class RecommentCreateView(LoginRequiredMixin, View):
         return redirect("goods:goods_detail", comment.goods.id)
 
 
-class RecommentUpdateView(LoginRequiredMixin, View):
+class RecommentUpdateView(Recomment_Creator_Permission, View):
     def post(self, request, pk):
         recomment = get_object_or_404(Recomment, id=pk)
 
@@ -152,7 +157,7 @@ class RecommentUpdateView(LoginRequiredMixin, View):
         return redirect("goods:goods_detail", recomment.comment.goods.id)
 
 
-class RecommentDeleteView(LoginRequiredMixin, View):
+class RecommentDeleteView(Recomment_Creator_Permission, View):
     def post(self, request, pk):
         recomment = get_object_or_404(Recomment, id=pk)
 
