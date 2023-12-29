@@ -13,15 +13,6 @@ from .permissions import (
 from .models import Goods, Category, Entertainer, Design, Comment, Recomment
 
 
-class GoodsListView(LoginRequiredMixin, View):
-    def get(self, request):
-        goods_list = Goods.objects.all().order_by("-updated_at")
-        return render(request, "goods/goods_list.html", {"goods_list": goods_list})
-
-    def post(self, request):
-        return render(request, "base/bad_request.html")
-
-
 class GoodsDetailView(LoginRequiredMixin, View):
     def get(self, request, pk):
         goods = get_object_or_404(Goods, id=pk)
