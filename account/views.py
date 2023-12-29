@@ -32,9 +32,6 @@ class RegisterView(View):
 
 
 class LoginView(View):
-    def get(self, request):
-        return render(request, "account/login.html")
-
     def post(self, request):
         email = request.POST["email"]
         password = request.POST["password"]
@@ -43,7 +40,7 @@ class LoginView(View):
 
         if user is not None:
             login(request, user)
-            return redirect("home")
+            return redirect("goods:goods_list")
 
         return render(request, "base/bad_request.html")
 
@@ -54,7 +51,7 @@ class LogoutView(LoginRequiredMixin, View):
 
     def post(self, request):
         logout(request)
-        return redirect("account:login")
+        return redirect("home")
 
 
 class UpdateView(User_Update_Permission, View):
