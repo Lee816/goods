@@ -7,7 +7,7 @@ from .models import User
 from .permissions import User_Update_Permission
 
 
-class UserView(View):
+class UserView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, "account/main.html")
 
