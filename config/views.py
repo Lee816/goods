@@ -5,10 +5,13 @@ from django.views import View
 from goods.models import Goods
 
 
-class HomeView(LoginRequiredMixin, View):
+class HomeView(View):
     def get(self, request):
-        goods_list = Goods.objects.all()
-        return render(request, "goods/goods_list.html", {"goods_list": goods_list})
+        if request.user:
+            goods_list = Goods.objects.all()
+            return render(request, "home.html", {"goods_list": goods_list})
+        else:
+            return render(request, "home.html")
 
     def post(self, request):
         return render(request, "base/bad_request.html")

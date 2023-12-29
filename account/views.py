@@ -40,7 +40,7 @@ class LoginView(View):
 
         if user is not None:
             login(request, user)
-            return redirect("goods:goods_list")
+            return redirect("home")
 
         return render(request, "base/bad_request.html")
 

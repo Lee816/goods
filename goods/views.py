@@ -47,7 +47,7 @@ class GoodsCreateView(LoginRequiredMixin, View):
             new_design = Design.objects.create(goods=goods, design=design)
             new_design.save()
 
-        return redirect("goods:goods_list")
+        return redirect("home")
 
 
 class GoodsUpdateView(Goods_Creator_Permission, View):
@@ -72,7 +72,7 @@ class GoodsUpdateView(Goods_Creator_Permission, View):
         goods.description = description
         goods.save()
 
-        return redirect("goods:goods_list")
+        return redirect("home")
 
 
 class GoodsDeleteView(Goods_Creator_Permission, View):
@@ -80,7 +80,7 @@ class GoodsDeleteView(Goods_Creator_Permission, View):
         goods = get_object_or_404(Goods, id=pk)
         goods.delete()
 
-        return redirect("goods:goods_list")
+        return redirect("home")
 
 
 class GoodsLikeView(LoginRequiredMixin, View):
