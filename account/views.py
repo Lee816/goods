@@ -8,8 +8,9 @@ from .permissions import User_Update_Permission
 
 
 class UserView(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, "account/main.html")
+    def get(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+        return render(request, "account/main.html", {"user": user})
 
 
 class RegisterView(View):
