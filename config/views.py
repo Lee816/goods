@@ -9,9 +9,9 @@ class HomeView(View):
     def get(self, request):
         if request.user:
             goods_list = Goods.objects.all()
-            return render(request, "home.html", {"goods_list": goods_list})
+            return render(request, "base/home.html", {"goods_list": goods_list})
         else:
-            return render(request, "home.html")
+            return render(request, "base/home.html")
 
     def post(self, request):
         return render(request, "base/bad_request.html")
