@@ -5,12 +5,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
 from .permissions import User_Update_Permission
+from goods.models import Goods
 
 
 class UserView(LoginRequiredMixin, View):
     def get(self, request, pk):
-        user = get_object_or_404(User, id=pk)
-        return render(request, "account/main.html", {"user": user})
+        another_user = get_object_or_404(User, id=pk)
+        goods_list = Goods.objects.filter(creator=another_user)
+        return render(
+            request,
+            "account/main.html",
+            {"another_user": another_user, "goods_list": goods_list},
+        )
 
 
 class RegisterView(View):
@@ -65,10 +71,15 @@ class UpdateView(User_Update_Permission, View):
     def post(self, request, pk):
         user = get_object_or_404(User, id=pk)
 
+        image = user.user_image
+
         user.nickname = request.POST["nickname"]
         user.phone = request.POST["phone"]
         user.introduce = request.POST["introduce"]
-        user.user_image = request.FILES["user_image"]
+        if request.FILES.getlist("user_image"):
+            user.user_image = request.FILES.getlist("user_image")[0]
+        else:
+            user.user_image = image
 
         user.save()
 
