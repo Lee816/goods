@@ -80,6 +80,15 @@ class Goods(models.Model):
         return like_count
 
     @property
+    def comment_count(self):
+        comment_count = 0
+        if self.likes.all():
+            for _ in self.comment.all():
+                comment_count += 1
+
+        return comment_count
+
+    @property
     def like_list(self):
         like_list = []
         for user in self.likes.all():
