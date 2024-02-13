@@ -39,7 +39,7 @@ class Recomment_Creator_Permission(LoginRequiredMixin):
             return self.handle_no_permission()
 
         recomment_id = self.kwargs["pk"]
-        recomment = get_object_or_404(Comment, id=recomment_id)
+        recomment = get_object_or_404(Recomment, id=recomment_id)
 
         if recomment.creator != request.user:
             return self.handle_no_permission()
