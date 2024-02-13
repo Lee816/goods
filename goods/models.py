@@ -108,7 +108,6 @@ class Design(models.Model):
         return f"{self.goods}의 디자인"
 
     class Meta:
-        ordering = ["-created_at"]
         indexes = [
             models.Index(fields=["goods"]),
             models.Index(fields=["created_at"]),
