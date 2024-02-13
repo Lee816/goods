@@ -61,7 +61,7 @@ class Goods(models.Model):
         return f"[{self.entertainer}] {self.creator} 굿즈"
 
     class Meta:
-        ordering = ["-updated_at"]
+        ordering = ["-created_at"]
         indexes = [
             models.Index(fields=["entertainer"]),
             models.Index(fields=["category"]),
