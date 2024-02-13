@@ -14,7 +14,7 @@ class UserView(LoginRequiredMixin, View):
         goods_list = Goods.objects.filter(creator=another_user)
         return render(
             request,
-            "account/main.html",
+            "account/user_main.html",
             {"another_user": another_user, "goods_list": goods_list},
         )
 
