@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from django.db.models import Q
 
 from goods.models import Goods
 
@@ -14,4 +15,13 @@ class HomeView(View):
             return render(request, "base/home.html")
 
     def post(self, request):
-        return render(request, "base/bad_request.html")
+        word = request.POST["word"]
+
+        goods_list = Goods.objects.filter(
+            Q(entertainer__name__icontains=word)
+            | Q(category__name__icontains=word)
+            | Q(creator__icontains=word)
+            | Q(description__icontains=word)
+        )
+
+        return render(request, "base/home.html", {"goods_list": goods_list})
