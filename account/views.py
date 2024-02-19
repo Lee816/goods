@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import User
@@ -98,15 +99,14 @@ class PWUpdateView(User_Update_Permission, View):
         user = get_object_or_404(User, id=pk)
 
         if (
-            user is not None
-            and password == user.password
+            check_password(password, user.password)
             and user == request.user
             and new_password1 == new_password2
         ):
             user.set_password(new_password1)
             user.save()
             logout(request)
-            return redirect("account:login")
+            return redirect("home")
 
         return render(request, "account/pw_update.html")
 
