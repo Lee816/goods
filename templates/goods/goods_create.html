@@ -1,23 +1,29 @@
 {% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/goods/goods_create.css" %}">
+{% endblock css %}
 
 {% block content %}
-    <form action="{% if goods %}{% url "goods:goods_update" goods.id %}{% else %}{% url "goods:goods_create" %}{% endif %}" method="post" enctype="multipart/form-data">
+    <form class="create-box" action="{% if goods %}{% url "goods:goods_update" goods.id %}{% else %}{% url "goods:goods_create" %}{% endif %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <select name="category">
-            {% for category in category %}
-                <option value="{{ category.id }}" {% if goods.category == category %}selected{% endif %}>{{ category.name }}</option>
-            {% endfor %}
-        </select>
-        <select name="entertainer" >
-            {% for entertainer in entertainer %}
-                <option value="{{ entertainer.id }}" {% if goods.entertainer == entertainer %}selected{% endif %}>{{ entertainer.name }}</option>
-            {% endfor %}
-        </select>
-        desctiption : 
-        <textarea name="description" cols="30" rows="10">{% if goods.description %}{{ goods.description }}{% endif %}</textarea>
+        <div class="input-group">
+            <select class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" name="entertainer" >
+                {% for entertainer in entertainer %}
+                    <option value="{{ entertainer.id }}" {% if goods.entertainer == entertainer %}selected{% endif %}>{{ entertainer.name }}</option>
+                {% endfor %}
+            </select>
+            <select class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" name="category">
+                {% for category in category %}
+                    <option class="dropdown-item" value="{{ category.id }}" {% if goods.category == category %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
         {% if not goods %}
-            <input type="file" name="design" multiple>
+            <input type="file" class="form-control" id="inputGroupFile03" name="design" aria-describedby="inputGroupFileAddon03" aria-label="Upload" multiple>
         {% endif %}
+        <textarea name="description" cols="30" rows="10">{% if goods.description %}{{ goods.description }}{% endif %}</textarea>
         <input type="submit" {% if goods %}value="Update"{% else %}value="Create"{% endif %}>
     </form>
 {% endblock content %}

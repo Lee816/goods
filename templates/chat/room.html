@@ -1,13 +1,24 @@
 {% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/chat/room.css" %}">
+{% endblock css %}
 
 {% block content %}
-    <div id="chat-log" cols="100" rows="20">
+    <div class="message-list" id="chat-log" cols="100" rows="20">
         {% for message in messages %}
-            <p {% if message.sender == user %}style="margin-left:50px;"{% endif %}>{{ message.message }}</p>
+            {% if message.sender == user %}
+                <p class="my-message"><span class="message-box">{{ message.message }}</span></p>
+            {% else %}
+                <p class="oppnent-message"><span class="message-box">{{ message.message }}</span></p>
+            {% endif %}
         {% endfor %}
-    </div><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
+        <div class="send-box">
+            <input id="chat-message-input" type="text" size="100">
+            <input id="chat-message-submit" type="button" value="Send">
+        </div>
+    </div>
     {{ room.id|json_script:"room-id" }}
     {{ user.id|json_script:"user-id" }}
     <script>

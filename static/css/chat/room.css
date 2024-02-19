@@ -1,0 +1,38 @@
+.message-list{
+    width: 300px;
+    height: 100%;
+
+    margin: 0 auto;
+
+    border: 1px #F5F5F5 solid;
+}
+
+.my-message{
+    margin-left: 10px;
+    text-align: left;
+}
+
+.oppnent-message{
+    margin-right: 10px;
+    text-align: right;
+}
+
+.message-box {
+    border: 1px lightgray solid;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.send-box{
+    display: flex;
+    position: absolute;
+    bottom: 0;
+}
+
+#chat-message-input{
+    width: 250px;
+}
+
+#chat-message-submit{
+    width: 50px;
+}

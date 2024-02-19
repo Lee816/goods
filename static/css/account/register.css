@@ -1,0 +1,39 @@
+:root {
+    --login-btn-sm-wid : 200px;
+    --login-btn-md-wid : 400px;
+    --login-btn-lg-wid : 600px;
+}
+
+.login-box {
+    width: 100vw;
+    height: 100%;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    font-size: 0.8rem;
+}
+
+.login-box input {
+    width: var(--login-btn-sm-wid);
+    margin: 5px auto 10px auto;
+}
+
+@media screen and (min-width: 768px) {
+
+    .login-box input {
+        width: var(--login-btn-md-wid);
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    .login-box input {
+        width: var(--login-btn-lg-wid);
+    }
+
+}

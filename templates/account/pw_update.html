@@ -1,11 +1,16 @@
 {% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/account/register.css" %}">
+{% endblock css %}
 
 {% block content %}
-    <form action="{% url "account:pw_update" user.id %}" method="post">
+    <form class="login-box" action="{% url "account:pw_update" user.id %}" method="post">
         {% csrf_token %}
-        password : <input type="password" name="password">
-        new password : <input type="password" name="new_password1">
-        repeat new password : <input type="password" name="new_password2">
+        <input type="password" name="password" placeholder="Password">
+        <input type="password" name="new_password1" placeholder="New Password">
+        <input type="password" name="new_password2" placeholder="Repeat New Password">
         <input type="submit" value="Update">
     </form>
 {% endblock content %}

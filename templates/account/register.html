@@ -1,10 +1,14 @@
 {% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/account/register.css" %}">
+{% endblock css %}
 
 {% block content %}
-    회원가입
-    <form action="{% url "account:register" %}" method="post">
+    <form class="login-box" action="{% url "account:register" %}" method="post">
         {% csrf_token %}
-        <input type="text" name="username" id="username" placeholder='Username'>
+        <input type="text" name="username" id="username" placeholder='Name'>
         <input type="text" name="nickname" id="nickname" placeholder='Nickname'>
         <input type="email" name="email" id="email" placeholder='Email'>
         <input type="text" name="phone" id="phone" placeholder='Phone'>

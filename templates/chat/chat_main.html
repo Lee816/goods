@@ -1,0 +1,28 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/chat/chat.css" %}">
+{% endblock css %}
+
+{% block content %}
+    {% for room in rooms %}
+        <div class="room-list">
+            {% if room.user1 == user %}
+                <a href="{% url "chat:room" room.user2.id %}">
+                    <div class="room">
+                        <span>{{ room.user2 }}</span>
+                        <span>{{ room.message.last.message }}</span>
+                    </div>
+                </a>
+            {% else %}
+                <a href="{% url "chat:room" room.user1.id %}">
+                    <div class="room">
+                        <span>{{ room.user1 }}</span>
+                        <span>{{ room.message.last.message }}</span>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock content %}

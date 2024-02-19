@@ -1,11 +1,16 @@
 {% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/account/register.css" %}">
+{% endblock css %}
 
 {% block content %}
-    <form action="{% url "account:pw_reset" user.id %}" method="post">
+    <form class="login-box" action="{% url "account:pw_reset" %}" method="post">
         {% csrf_token %}
-        username : <input type="text" name="username" placeholder="username">
-        email : <input type="text" name='email' placeholder="email">
-        phone : <input type="text" name="phone" placeholder="phone">
+        <input type="text" name="username" placeholder="Name">
+        <input type="text" name='email' placeholder="Email">
+        <input type="text" name="phone" placeholder="Phone">
         <input type="submit" value="Send">
     </form>
 {% endblock content %}

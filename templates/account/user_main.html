@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/account/user_main.css" %}">
+{% endblock css %}
+
+{% block content %}
+    {% if another_user == user %}
+        <div class="user-info">
+            <div>
+                <img class="user-img" src="/media/{{ user.user_image }}" alt="">
+                <p>{{ user.nickname }}</p>
+                <div class="dropdown">
+                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        ···
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <form action="{% url "account:update" user.id %}" method="get">
+                                {% csrf_token %}
+                                <button type="submit">Update</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{% url "account:pw_update" user.id %}" method="get">
+                                {% csrf_token %}
+                                <button type="submit">PW Change</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{% url "account:logout" %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <p>following : {{ user.following_count }} <span>follower : {{ user.followers_count }}</span></p>
+                <p>{{ user.introduce }}</p>
+            </div>
+        </div>
+        <div class="goods-design-box">
+            {% for goods in goods_list %}
+                <a href="{% url "goods:goods_detail" goods.id %}"><img src="/media/{{ goods.design.first.design }}"></a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="user-info">
+            <div>
+                <img class="user-img" src="/media/{{ another_user.user_image }}" alt="">
+                <p>{{ another_user.nickname }}</p>
+            </div>
+            <div>
+                <p>following : {{ another_user.following_count }} <span>follower : {{ another_user.followers_count }}</span></p>
+                <p>{{ another_user.introduce }}</p>
+            </div>
+        </div>
+        <div class="goods-design-box">
+            {% for goods in goods_list %}
+                <a href="{% url "goods:goods_detail" goods.id %}"><img src="/media/{{ goods.design.first.design }}"></a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock content %}

@@ -1,13 +1,17 @@
 {% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/account/register.css" %}">
+{% endblock css %}
 
 {% block content %}
-    <form action="{% url "account:update" user.id %}" method="post" enctype="multipart/form-data">
+    <form class="login-box" action="{% url "account:update" user.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        nickname : <input type="text" name='nickname' value={{ user.nickname }}> <br>
-        phone : <input type="text" name='phone' value={{ user.phone }}> <br>
-        introduce : <input type="text" name='introduce' value={{ user.introduce }}> <br>
-        <img src="/media/{{ user.user_image }}" alt="">
-        <input type="file" name="user_image">
+        <input type="text" name='nickname' {% if user.nickname %}value={{ user.nickname }}{% endif %} placeholder="Nickname">
+        <input type="text" name='phone' {% if user.phone %}value={{ user.phone }}{% endif %} placeholder="phone">
+        <input type="text" name='introduce' {% if user.introduce %}value={{ user.introduce }}{% endif %} placeholder="Introduce">
+        <input type="file" class="form-control" id="inputGroupFile03" name="user_image" aria-describedby="inputGroupFileAddon03" aria-label="Upload" >
         <input type="submit" value="Update">
     </form>
 {% endblock content %}
