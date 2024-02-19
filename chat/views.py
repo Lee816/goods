@@ -7,6 +7,13 @@ from account.models import User
 from .models import Room, Message
 
 
+class RoomListView(View):
+    def get(self, request):
+        rooms = Room.objects.filter(Q(user1=request.user) | Q(user2=request.user))
+
+        return render(request, "chat/chat_main.html", {"rooms": rooms})
+
+
 class RoomView(View):
     def get(self, request, pk):
         opponent = get_object_or_404(User, id=pk)
