@@ -111,24 +111,28 @@ class PWUpdateView(User_Update_Permission, View):
         return render(request, "account/pw_update.html")
 
 
-class PWResetView(User_Update_Permission, View):
-    def get(self, request, pk):
+class PWResetView(View):
+    def get(self, request):
         return render(request, "account/pw_reset.html")
 
-    def post(self, request, pk):
+    def post(self, request):
         email = request.POST["email"]
         username = request.POST["username"]
         phone = request.POST["phone"]
 
-        user = get_object_or_404(User, email=email, username=username, phone=phone)
+        reset_user = get_object_or_404(
+            User, email=email, username=username, phone=phone
+        )
 
-        if user is not None and user == request.user and user.id == pk:
-            return render(request, "account/pw_reset_confirm.html", {"user": user})
+        if reset_user is not None:
+            return render(
+                request, "account/pw_reset_confirm.html", {"reset_user": reset_user}
+            )
 
         return render(request, "base/bad_request.html")
 
 
-class PWResetConfirmView(User_Update_Permission, View):
+class PWResetConfirmView(View):
     def get(self, request, pk):
         return render(request, "base/bad_request.html")
 
@@ -142,6 +146,6 @@ class PWResetConfirmView(User_Update_Permission, View):
             user.set_password(new_password1)
             user.save()
             logout(request)
-            return redirect("account:login")
+            return redirect("home")
 
         return render(request, "account/pw_reset_confirm.html", {"user": user})
