@@ -60,7 +60,7 @@
 }
 
 .dropdown {
-    margin: 0 10px 0 auto
+    margin: 0 10px 0 auto;
 }
 
 .dropdown button {
@@ -139,6 +139,10 @@
         width: var(--login-btn-md-wid);
     }
 
+    .goods-creator-box {
+        width: var(--goods-item-md-wid);
+    }
+
     .goods-item {
         width: var(--goods-md-wid);
     }
@@ -158,6 +162,10 @@
 
     .login-box input {
         width: var(--login-btn-lg-wid);
+    }
+
+    .goods-creator-box {
+        width: var(--goods-item-lg-wid);
     }
 
     .goods-item {
