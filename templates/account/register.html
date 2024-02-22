@@ -8,11 +8,11 @@
 {% block content %}
     <form class="login-box" action="{% url "account:register" %}" method="post">
         {% csrf_token %}
-        <input type="text" name="username" id="username" placeholder='Name'>
-        <input type="text" name="nickname" id="nickname" placeholder='Nickname'>
-        <input type="email" name="email" id="email" placeholder='Email'>
-        <input type="text" name="phone" id="phone" placeholder='Phone'>
-        <input type="password" name="password" id="password" placeholder='Password'>
+        <input type="text" name="username" id="username" placeholder='이름'>
+        <input type="text" name="nickname" id="nickname" placeholder='닉네임'>
+        <input type="email" name="email" id="email" placeholder='이메일'>
+        <input type="text" name="phone" id="phone" placeholder='휴대폰번호'>
+        <input type="password" name="password" id="password" placeholder='비밀번호'>
         <input type="submit" value="Register">
     </form>
 {% endblock content %}
