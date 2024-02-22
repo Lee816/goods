@@ -36,7 +36,7 @@
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             chatbox = document.querySelector('#chat-log');
-            chatbox.innerHTML += data.user_id === userID ? '<p style="margin-left:50px;" >' + data.message + '</p>' : '<p>' + data.message + '</p>';
+            chatbox.innerHTML += data.user_id === userID ? '<p class="my-message"><span class="message-box">' + data.message + '</span></p>' : '<p class="oppnent-message"><span class="message-box">' + data.message + '</span></p>';
         };
 
         chatSocket.onclose = function(e) {

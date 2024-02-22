@@ -1,20 +1,22 @@
-.message-list{
+.message-list {
     width: 300px;
     height: 100%;
 
-    margin: 0 auto;
+    margin: 10px auto;
 
     border: 1px #F5F5F5 solid;
 }
 
-.my-message{
-    margin-left: 10px;
-    text-align: left;
-}
-
-.oppnent-message{
+.my-message {
+    margin-top: 10px;
     margin-right: 10px;
     text-align: right;
+}
+
+.oppnent-message {
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: left;
 }
 
 .message-box {
@@ -23,16 +25,16 @@
     padding: 5px;
 }
 
-.send-box{
+.send-box {
     display: flex;
     position: absolute;
     bottom: 0;
 }
 
-#chat-message-input{
+#chat-message-input {
     width: 250px;
 }
 
-#chat-message-submit{
+#chat-message-submit {
     width: 50px;
 }
