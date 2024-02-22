@@ -51,7 +51,7 @@
         <div class="user-info">
             <div>
                 <img class="user-img" src="/media/{{ another_user.user_image }}" alt="">
-                <p>{{ another_user.nickname }}</p>
+                <p>{{ another_user.nickname }} <a href="{% url "chat:room" another_user.id %}"><i class="fa-regular fa-message"></i></a></p>
             </div>
             <div>
                 <p>following : {{ another_user.following_count }} <span>follower : {{ another_user.followers_count }}</span></p>
