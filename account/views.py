@@ -49,8 +49,12 @@ class LoginView(View):
         if user is not None:
             login(request, user)
             return redirect("home")
-
-        return render(request, "base/bad_request.html")
+        elif User.objects.filter(email=email).exists():
+            message = "비밀번호가 잘못 됬습니다."
+            return redirect("home", {"message": message})
+        else:
+            message = "존재하지 않는 정보입니다."
+            return redirect("home", {"message": message})
 
 
 class LogoutView(LoginRequiredMixin, View):
