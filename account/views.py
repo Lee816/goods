@@ -40,6 +40,10 @@ class RegisterView(View):
 
 
 class LoginView(View):
+    def get(self, request):
+        message = "로그인이 필요합니다."
+        return render(request, "base/home.html", {"message": message})
+
     def post(self, request):
         email = request.POST["email"]
         password = request.POST["password"]
@@ -50,17 +54,14 @@ class LoginView(View):
             login(request, user)
             return redirect("home")
         elif User.objects.filter(email=email).exists():
-            message = "비밀번호가 잘못 됬습니다."
-            return redirect("home", {"message": message})
+            message = "비밀번호가 틀렸습니다."
+            return render(request, "base/home.html", {"message": message})
         else:
             message = "존재하지 않는 정보입니다."
-            return redirect("home", {"message": message})
+            return render(request, "base/home.html", {"message": message})
 
 
 class LogoutView(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, "base/bad_request.html")
-
     def post(self, request):
         logout(request)
         return redirect("home")
