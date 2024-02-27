@@ -14,8 +14,6 @@
                             <img class="design-img" src="/media/{{ design.design }}">
                         </div>
                     {% endfor %}
-                    <a class="prev"><i class="fa-solid fa-circle-chevron-left"></i></a>
-                    <a class="next"><i class="fa-solid fa-circle-chevron-right"></i></a>
                 </div>
                 <div class="goods-nav">
                     <span onclick="sendRequest({{ goods.id }}, this)">{% if user.nickname in goods.like_list %}<i style="color:red;" class="fa-solid fa-heart"></i>{% else %}<i style="color:red;" class="fa-regular fa-heart"></i>{% endif %}</span>

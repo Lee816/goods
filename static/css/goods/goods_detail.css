@@ -60,7 +60,7 @@ button{
     display: flex;
     flex-direction: row;
 
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .design-img {
